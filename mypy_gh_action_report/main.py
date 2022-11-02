@@ -2,7 +2,7 @@ import sys
 
 
 def output_workflow_command():
-    print("::error file=main.js,line=1::Something awful!", file=sys.stderr)
+    print("::error file=main.py,line=1::Something awful!", file=sys.stderr)
 
 
 if __name__ == "__main__":
