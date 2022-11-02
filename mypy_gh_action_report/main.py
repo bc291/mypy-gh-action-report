@@ -1,10 +1,8 @@
 import sys
 
-from mypy_json_report import produce_errors_report
-
 
 def output_workflow_command():
-    print("::error file=app.js,line=1::Missing semicolon")
+    print("::error file=app.js,line=1::Missing semicolon", file=sys.stderr)
 
 
 if __name__ == "__main__":
