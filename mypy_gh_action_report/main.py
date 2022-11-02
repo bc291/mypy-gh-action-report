@@ -1,8 +1,8 @@
-import sys
+from actions_toolkit import core
 
 
 def output_workflow_command():
-    print("::error file=main.py,line=1::Something awful!", file=sys.stderr)
+    core.error('Something awful!')
 
 
 if __name__ == "__main__":
