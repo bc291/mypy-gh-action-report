@@ -2,7 +2,7 @@ import dataclasses
 import re
 import sys
 from collections import defaultdict
-from typing import Any, DefaultDict, Dict, List, Literal, Pattern, Union
+from typing import Any, DefaultDict, Dict, List, Literal, Optional, Pattern, Union
 
 from mypy_gh_action_report.workflow_command_gen import generate_workflow_commands
 
@@ -23,14 +23,14 @@ class MypyError:
         self.line_no = int(self.line_no)
 
 
-def __resolve_error_code(error_code_raw: str) -> str | None:
+def __resolve_error_code(error_code_raw: str) -> Optional[str]:
     if not error_code_raw:
         return None
 
     return error_code_raw[1:-1]
 
 
-def __resolve_error_line(error_line_raw: str) -> Dict[str, Any] | None:
+def __resolve_error_line(error_line_raw: str) -> Optional[Dict[str, Any]]:
     matched = re.match(LINE_PATTERN, error_line_raw)
 
     if matched is None:
@@ -39,7 +39,7 @@ def __resolve_error_line(error_line_raw: str) -> Dict[str, Any] | None:
     return matched.groupdict()
 
 
-def parse_mypy_line(mypy_line: str) -> MypyError | None:
+def parse_mypy_line(mypy_line: str) -> Optional[MypyError]:
     error_line_raw, _, error_code_raw = mypy_line.partition("  ")
     error_code = __resolve_error_code(error_code_raw=error_code_raw)
     error_line = __resolve_error_line(error_line_raw=error_line_raw)
@@ -68,7 +68,7 @@ def convert_mypy_output_to_dict(mypy_output: str) -> DefaultDict:
     return result
 
 
-def mypy_to_gh_action_workflow(raw_mypy: str):
+def mypy_to_gh_action_workflow(raw_mypy: str) -> None:
     mypy_output_as_dict = convert_mypy_output_to_dict(mypy_output=raw_mypy)
     print(generate_workflow_commands(mypy_output_as_dict=mypy_output_as_dict))
 
