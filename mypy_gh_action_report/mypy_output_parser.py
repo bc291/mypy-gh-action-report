@@ -50,7 +50,7 @@ def parse_mypy_line(mypy_line: str) -> MypyError | None:
     return MypyError(**error_line, error_code=error_code)
 
 
-def convert_mypy_output_to_dict(mypy_output: str) -> DefaultDict[str, List[Dict[str, Any]]]:
+def convert_mypy_output_to_dict(mypy_output: str) -> DefaultDict:
     result = defaultdict(list)
 
     for mypy_line in mypy_output.splitlines()[:-1]:
