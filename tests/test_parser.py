@@ -2,7 +2,8 @@ import dataclasses
 
 import pytest
 
-from mypy_gh_action_report.main import MypyError, convert_mypy_output_to_dict, parse_mypy_line
+from mypy_gh_action_report.models import MypyError
+from mypy_gh_action_report.parser import convert_mypy_output_to_dict, parse_mypy_line
 
 TEST_DATA_1 = (
     "app/core/core.py:18"

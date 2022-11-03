@@ -1,6 +1,6 @@
 import pytest
 
-from mypy_gh_action_report.workflow_command_gen import generate_workflow_commands
+from mypy_gh_action_report.converter import get_json_representation, get_workflow_commands
 
 
 @pytest.fixture
@@ -48,7 +48,15 @@ def data():
 
 
 def test_output_workflow_command(capsys, data):
-    generate_workflow_commands(mypy_output_as_dict=data)
+    get_workflow_commands(mypy_output=data)
     stdout = capsys.readouterr().out.splitlines()
 
     assert len(stdout) == 5
+
+
+def test_get_json_representation():
+    # when
+    result = get_json_representation({"test": "test"})
+
+    # then
+    assert result == '{"test": "test"}'
