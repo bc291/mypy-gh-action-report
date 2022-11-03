@@ -2,7 +2,7 @@ import dataclasses
 import re
 import sys
 from collections import defaultdict
-from typing import Any, DefaultDict, Literal, Pattern, Union
+from typing import Any, DefaultDict, Dict, List, Literal, Pattern, Union
 
 from mypy_gh_action_report.workflow_command_gen import generate_workflow_commands
 
@@ -30,7 +30,7 @@ def __resolve_error_code(error_code_raw: str) -> str | None:
     return error_code_raw[1:-1]
 
 
-def __resolve_error_line(error_line_raw: str) -> dict[str, Any] | None:
+def __resolve_error_line(error_line_raw: str) -> Dict[str, Any] | None:
     matched = re.match(LINE_PATTERN, error_line_raw)
 
     if matched is None:
@@ -50,7 +50,7 @@ def parse_mypy_line(mypy_line: str) -> MypyError | None:
     return MypyError(**error_line, error_code=error_code)
 
 
-def convert_mypy_output_to_dict(mypy_output: str) -> DefaultDict[str, list[dict[str, Any]]]:
+def convert_mypy_output_to_dict(mypy_output: str) -> DefaultDict[str, List[Dict[str, Any]]]:
     result = defaultdict(list)
 
     for mypy_line in mypy_output.splitlines()[:-1]:
