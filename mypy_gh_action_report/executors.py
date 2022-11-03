@@ -25,6 +25,6 @@ def handle_output(mypy_output: str, json_only: bool) -> None:
     mypy_output_as_dict = parser.convert_mypy_output_to_dict(mypy_output=mypy_output)
 
     if json_only:
-        typer.secho(converter.get_json_representation(mypy_output=mypy_output_as_dict), nl=False)
+        typer.secho(converter.get_json_representation(mypy_output=mypy_output_as_dict), nl=True)
     else:
         converter.get_workflow_commands(mypy_output=mypy_output_as_dict)

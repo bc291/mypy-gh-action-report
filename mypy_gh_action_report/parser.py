@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict
-from typing import Any, Dict, Optional, Pattern
+from typing import Any, Dict, Optional, Pattern, Union
 
 from mypy_gh_action_report.models import MypyError
 from mypy_gh_action_report.types import MypyErrorsDict
@@ -43,6 +43,9 @@ def convert_mypy_output_to_dict(mypy_output: str) -> MypyErrorsDict:
     for mypy_line in mypy_output.splitlines()[:-1]:
         parsed_line = parse_mypy_line(mypy_line=mypy_line.strip())
 
+        if not parsed_line:
+            continue
+
         result[parsed_line.file_name].append(
             {
                 "line_no": parsed_line.line_no,
@@ -52,4 +55,4 @@ def convert_mypy_output_to_dict(mypy_output: str) -> MypyErrorsDict:
             }
         )
 
-    return dict(result)
+    return dict(**result)

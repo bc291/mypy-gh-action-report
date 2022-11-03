@@ -10,5 +10,5 @@ class MypyError:
     message: str
     error_code: Optional[str]
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.line_no = int(self.line_no)

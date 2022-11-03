@@ -1,4 +1,5 @@
 import sys
+import typing
 from typing import Final, Optional
 
 import typer
@@ -13,7 +14,7 @@ def run(
     json_only: bool = typer.Option(False, help="Just convert mypy output to json"),
 ) -> None:
     classify_output(mypy_output=mypy_output)
-    handle_output(mypy_output=mypy_output, json_only=json_only)
+    handle_output(mypy_output=typing.cast(str, mypy_output), json_only=json_only)
     raise typer.Exit(code=1)
 
 
