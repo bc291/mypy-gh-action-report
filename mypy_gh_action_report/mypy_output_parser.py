@@ -2,7 +2,7 @@ import dataclasses
 import re
 import sys
 from collections import defaultdict
-from typing import Any, Literal, Pattern
+from typing import Any, Literal, Pattern, Union
 
 from mypy_gh_action_report.workflow_command_gen import generate_workflow_commands
 
@@ -17,7 +17,7 @@ class MypyError:
     line_no: int
     type: Literal["error", "note"]
     message: str
-    error_code: str | None  # TODO: get list of
+    error_code: Union[str, None]  # TODO: get list of
 
     def __post_init__(self):
         self.line_no = int(self.line_no)
