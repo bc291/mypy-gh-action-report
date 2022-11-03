@@ -139,14 +139,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "mypy-json-report"
-version = "0.1.3"
-description = "Generate a JSON report from your mypy output"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[[package]]
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
@@ -398,7 +390,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "106dc7a6779dc0c4612454dd432eb5a73de24de558826d256f57e346c1396fe5"
+content-hash = "a3f9d54b22a56db51696148a88ce2e21f5b8753c4ce46e74509ef05c68a651d9"
 
 [metadata.files]
 actions-toolkit = [
@@ -514,10 +506,6 @@ importlib-resources = [
 iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
-]
-mypy-json-report = [
-    {file = "mypy-json-report-0.1.3.tar.gz", hash = "sha256:162caa9753a809ae6e26e375cc67a9e05267684c7cf0b7797070b37b5df69fe2"},
-    {file = "mypy_json_report-0.1.3-py3-none-any.whl", hash = "sha256:bf46f98514f413fb98006a45d0b40c37d9b719df4b4d5d3544ff71c21c9f2a5a"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
