@@ -1,26 +1,13 @@
-import dataclasses
 import re
-import sys
 from collections import defaultdict
-from typing import Any, DefaultDict, Dict, List, Literal, Optional, Pattern, Union
+from typing import Any, Dict, Optional, Pattern, Union
 
-from mypy_gh_action_report.workflow_command_gen import generate_workflow_commands
+from mypy_gh_action_report.models import MypyError
+from mypy_gh_action_report.types import MypyErrorsDict
 
 LINE_PATTERN: Pattern = re.compile(
     r"(?P<file_name>.*\.py[i]?)" r":(?P<line_no>\d*):\s" r"(?P<type>error|note)" r":\s*" r"(?P<message>.*)"
 )
-
-
-@dataclasses.dataclass
-class MypyError:
-    file_name: str
-    line_no: int
-    type: Literal["error", "note"]
-    message: str
-    error_code: Union[str, None]  # TODO: get list of
-
-    def __post_init__(self):
-        self.line_no = int(self.line_no)
 
 
 def __resolve_error_code(error_code_raw: str) -> Optional[str]:
@@ -50,11 +37,14 @@ def parse_mypy_line(mypy_line: str) -> Optional[MypyError]:
     return MypyError(**error_line, error_code=error_code)
 
 
-def convert_mypy_output_to_dict(mypy_output: str) -> DefaultDict:
+def convert_mypy_output_to_dict(mypy_output: str) -> MypyErrorsDict:
     result = defaultdict(list)
 
     for mypy_line in mypy_output.splitlines()[:-1]:
         parsed_line = parse_mypy_line(mypy_line=mypy_line.strip())
+
+        if not parsed_line:
+            continue
 
         result[parsed_line.file_name].append(
             {
@@ -65,13 +55,4 @@ def convert_mypy_output_to_dict(mypy_output: str) -> DefaultDict:
             }
         )
 
-    return result
-
-
-def mypy_to_gh_action_workflow(raw_mypy: str) -> None:
-    mypy_output_as_dict = convert_mypy_output_to_dict(mypy_output=raw_mypy)
-    print(generate_workflow_commands(mypy_output_as_dict=mypy_output_as_dict))
-
-
-if __name__ == "__main__":
-    mypy_to_gh_action_workflow(sys.stdin.read())
+    return dict(**result)
