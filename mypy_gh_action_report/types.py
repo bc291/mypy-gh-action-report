@@ -1,3 +1,3 @@
-from typing import Dict, Union
+from typing import Dict, List, Union
 
-MypyErrorsDict = Dict[str, list[Dict[str, Union[int, str]]]]
+MypyErrorsDict = Dict[str, List[Dict[str, Union[int, str]]]]
