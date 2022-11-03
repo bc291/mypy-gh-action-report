@@ -25,6 +25,8 @@ jobs:
           cache: poetry
 
       - name: Install dependencies
+        env:
+          PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
         run: poetry install --only main
 
       - name: Build package
