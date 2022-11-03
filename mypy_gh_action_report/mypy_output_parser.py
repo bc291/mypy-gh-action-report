@@ -2,7 +2,7 @@ import dataclasses
 import re
 import sys
 from collections import defaultdict
-from typing import Any, Literal, Pattern
+from typing import Any, DefaultDict, Dict, List, Literal, Optional, Pattern, Union
 
 from mypy_gh_action_report.workflow_command_gen import generate_workflow_commands
 
@@ -17,20 +17,20 @@ class MypyError:
     line_no: int
     type: Literal["error", "note"]
     message: str
-    error_code: str | None  # TODO: get list of
+    error_code: Union[str, None]  # TODO: get list of
 
     def __post_init__(self):
         self.line_no = int(self.line_no)
 
 
-def __resolve_error_code(error_code_raw: str) -> str | None:
+def __resolve_error_code(error_code_raw: str) -> Optional[str]:
     if not error_code_raw:
         return None
 
     return error_code_raw[1:-1]
 
 
-def __resolve_error_line(error_line_raw: str) -> dict[str, Any] | None:
+def __resolve_error_line(error_line_raw: str) -> Optional[Dict[str, Any]]:
     matched = re.match(LINE_PATTERN, error_line_raw)
 
     if matched is None:
@@ -39,7 +39,7 @@ def __resolve_error_line(error_line_raw: str) -> dict[str, Any] | None:
     return matched.groupdict()
 
 
-def parse_mypy_line(mypy_line: str) -> MypyError | None:
+def parse_mypy_line(mypy_line: str) -> Optional[MypyError]:
     error_line_raw, _, error_code_raw = mypy_line.partition("  ")
     error_code = __resolve_error_code(error_code_raw=error_code_raw)
     error_line = __resolve_error_line(error_line_raw=error_line_raw)
@@ -50,7 +50,7 @@ def parse_mypy_line(mypy_line: str) -> MypyError | None:
     return MypyError(**error_line, error_code=error_code)
 
 
-def convert_mypy_output_to_dict(mypy_output: str) -> defaultdict[str, list[dict[str, Any]]]:
+def convert_mypy_output_to_dict(mypy_output: str) -> DefaultDict:
     result = defaultdict(list)
 
     for mypy_line in mypy_output.splitlines()[:-1]:
@@ -68,7 +68,7 @@ def convert_mypy_output_to_dict(mypy_output: str) -> defaultdict[str, list[dict[
     return result
 
 
-def mypy_to_gh_action_workflow(raw_mypy: str):
+def mypy_to_gh_action_workflow(raw_mypy: str) -> None:
     mypy_output_as_dict = convert_mypy_output_to_dict(mypy_output=raw_mypy)
     print(generate_workflow_commands(mypy_output_as_dict=mypy_output_as_dict))
 
