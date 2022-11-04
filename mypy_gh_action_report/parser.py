@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict
-from typing import Any, Dict, Optional, Pattern, Union
+from typing import Any, Dict, Optional, Pattern
 
 from mypy_gh_action_report.models import MypyError
 from mypy_gh_action_report.types import MypyErrorsDict

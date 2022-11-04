@@ -4,11 +4,23 @@ repos:
     rev: v4.3.0
     hooks:
       - id: trailing-whitespace
+      - id: check-json
+      - id: check-yaml
+      - id: check-toml
+      - id: trailing-whitespace
+        exclude: ".(tsx|snap)"
+      - id: end-of-file-fixer
+        exclude: ".(svg|png|jpg)"
 
   - repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
       - id: black
+
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 5.0.4
+    hooks:
+      - id: flake8
 
   - repo: https://github.com/PyCQA/isort
     rev: 5.10.1
