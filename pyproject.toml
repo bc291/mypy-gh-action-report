@@ -30,6 +30,10 @@ pytest = "^7.2.0"
 tox = "^3.27.0"
 tox-gh-actions = "^2.10.0"
 
+
+[tool.poetry.group.type_check.dependencies]
+mypy = "^0.982"
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = "tests"
