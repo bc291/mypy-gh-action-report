@@ -97,9 +97,15 @@ jobs:
         uses: charmixer/auto-changelog-action@v1
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          output: 'CHANGELOG-test.md'
+          output: 'CHANGELOG-release.md'
 
-      - name: Get ls
+      - name: Set CHANGELOG as an output
+        id: changelog
         run: |
-          cat ./CHANGELOG-test.md
+          echo "changelog=$(cat ./CHANGELOG-test.md)\n" >> $GITHUB_OUTPUT
         shell: bash
+
+      - name: Comment CHANGELOG to PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: ${{steps.changelog.outputs.changelog}}
