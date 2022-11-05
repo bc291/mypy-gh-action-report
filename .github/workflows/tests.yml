@@ -97,7 +97,7 @@ jobs:
         uses: charmixer/auto-changelog-action@v1
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          output: 'CHANGELOG-release.md'
+          output: 'CHANGELOG-test.md'
 
       - name: Set CHANGELOG as an output
         id: changelog
