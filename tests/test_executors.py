@@ -3,7 +3,8 @@ from unittest.mock import patch
 import pytest
 import typer
 
-from mypy_gh_action_report import converter, parser
+from mypy_gh_action_report import parser
+from mypy_gh_action_report.converters import gha, json
 from mypy_gh_action_report.executors import classify_output, handle_output
 
 
@@ -15,13 +16,13 @@ def mock_convert_mypy_output_to_dict():
 
 @pytest.fixture
 def mock_get_workflow_commands():
-    with patch.object(converter, "get_workflow_commands") as mock:
+    with patch.object(gha, "get_workflow_commands") as mock:
         yield mock
 
 
 @pytest.fixture
 def mock_get_json_representation():
-    with patch.object(converter, "get_json_representation") as mock:
+    with patch.object(json, "get_json_representation") as mock:
         yield mock
 
 
