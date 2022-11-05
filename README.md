@@ -51,46 +51,43 @@ Found 8 errors in 4 files (checked 7 source files)
 with `--json-only` flag:
 
 ```json
-{
-  "mypy_gh_action_report/types.py": [
-    {
-      "line_no": 3,
-      "error_code": "type-arg",
-      "type": "error",
-      "message": "\"list\" expects 1 type argument, but 2 given"
-    }
-  ],
-  "mypy_gh_action_report/models.py": [
-    {
-      "line_no": 13,
-      "error_code": "no-untyped-def",
-      "type": "error",
-      "message": "Function is missing a return type annotation"
-    }
-  ],
-  "mypy_gh_action_report/parser.py": [
-    {
-      "line_no": 46,
-      "error_code": "union-attr",
-      "type": "error",
-      "message": "Item \"None\" of \"Optional[MypyError]\" has no attribute \"file_name\""
-    },
-    {
-      "line_no": 48,
-      "error_code": "union-attr",
-      "type": "error",
-      "message": "Item \"None\" of \"Optional[MypyError]\" has no attribute \"line_no\""
-    }
-  ],
-  "mypy_gh_action_report/main.py": [
-    {
-      "line_no": 16,
-      "error_code": "arg-type",
-      "type": "error",
-      "message": "Argument \"mypy_output\" to \"handle_output\" has incompatible type \"Optional[str]\"; expected \"str\""
-    }
-  ]
-}
+[
+   {
+      "file_name":"mypy_gh_action_report/types.py",
+      "line_no":3,
+      "error_code":"type-arg",
+      "type":"error",
+      "message":"\"list\" expects 1 type argument, but 2 given"
+   },
+   {
+      "file_name":"mypy_gh_action_report/models.py",
+      "line_no":13,
+      "error_code":"no-untyped-def",
+      "type":"error",
+      "message":"Function is missing a return type annotation"
+   },
+   {
+      "file_name":"mypy_gh_action_report/parser.py",
+      "line_no":46,
+      "error_code":"union-attr",
+      "type":"error",
+      "message":"Item \"None\" of \"Optional[MypyError]\" has no attribute \"file_name\""
+   },
+   {
+      "file_name":"mypy_gh_action_report/parser.py",
+      "line_no":48,
+      "error_code":"union-attr",
+      "type":"error",
+      "message":"Item \"None\" of \"Optional[MypyError]\" has no attribute \"line_no\""
+   },
+   {
+      "file_name":"mypy_gh_action_report/main.py",
+      "line_no":16,
+      "error_code":"arg-type",
+      "type":"error",
+      "message":"Argument \"mypy_output\" to \"handle_output\" has incompatible type \"Optional[str]\"; expected \"str\""
+   }
+]
 ```
 
 ## Development

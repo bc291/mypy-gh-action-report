@@ -1,17 +1,15 @@
-from typing import Dict, Final, Optional, Union, cast
+from typing import Dict, Final, List, Optional
 
-from mypy_gh_action_report.models import MypyErrorType, WorkflowMessageType
-from mypy_gh_action_report.types import MypyErrorsDict
+from mypy_gh_action_report.models import MypyError, MypyErrorType, WorkflowMessageType
 
 MYPY_MSG_TYPE_TO_GH_WF_MSG_TYPE_MAPPER: Dict[MypyErrorType, WorkflowMessageType] = {
     MypyErrorType.ERROR: WorkflowMessageType.ERROR,
     MypyErrorType.NOTE: WorkflowMessageType.WARNING,
 }
-
 TITLE_BEGINNING: Final[str] = "Mypy found"
 
 
-def get_gh_workflow_type(_type: str) -> WorkflowMessageType:
+def get_gh_workflow_type(_type: MypyErrorType) -> WorkflowMessageType:
     return MYPY_MSG_TYPE_TO_GH_WF_MSG_TYPE_MAPPER[_type]
 
 
@@ -21,13 +19,12 @@ def construct_message_title(error_code: Optional[str]) -> str:
     return f"{TITLE_BEGINNING} an issue"
 
 
-def issue_message(error: Dict[str, Union[int, str]], file: str) -> None:
-    gh_workflow_msg_type = get_gh_workflow_type(_type=cast(str, error["type"]))
-    title = construct_message_title(error_code=error["error_code"])
-    gh_workflow_msg_type.handler(error["message"], title=title, file=file, start_line=error["line_no"])
+def issue_message(error: MypyError) -> None:
+    gh_workflow_msg_type = get_gh_workflow_type(_type=error.type)
+    title = construct_message_title(error_code=error.error_code)
+    gh_workflow_msg_type.handler(error.message, title=title, file=error.file_name, start_line=error.line_no)
 
 
-def get_workflow_commands(mypy_output: MypyErrorsDict) -> None:
-    for file, errors in mypy_output.items():
-        for error in errors:
-            issue_message(error=error, file=file)
+def get_workflow_commands(mypy_errors: List[MypyError]) -> None:
+    for error in mypy_errors:
+        issue_message(error=error)

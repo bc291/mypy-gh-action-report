@@ -1,9 +1,7 @@
 import re
-from collections import defaultdict
-from typing import Any, Dict, Optional, Pattern
+from typing import Any, Dict, List, Optional, Pattern
 
 from mypy_gh_action_report.models import MypyError
-from mypy_gh_action_report.types import MypyErrorsDict
 
 LINE_PATTERN: Pattern = re.compile(
     r"(?P<file_name>.*\.py[i]?)" r":(?P<line_no>\d*):\s" r"(?P<type>error|note)" r":\s*" r"(?P<message>.*)"
@@ -37,8 +35,8 @@ def parse_mypy_line(mypy_line: str) -> Optional[MypyError]:
     return MypyError(**error_line, error_code=error_code)
 
 
-def convert_mypy_output_to_dict(mypy_output: str) -> MypyErrorsDict:
-    result = defaultdict(list)
+def convert_mypy_output_to_model(mypy_output: str) -> List[MypyError]:
+    result: List[MypyError] = []
 
     for mypy_line in mypy_output.splitlines()[:-1]:
         parsed_line = parse_mypy_line(mypy_line=mypy_line.strip())
@@ -46,13 +44,6 @@ def convert_mypy_output_to_dict(mypy_output: str) -> MypyErrorsDict:
         if not parsed_line:
             continue
 
-        result[parsed_line.file_name].append(
-            {
-                "line_no": parsed_line.line_no,
-                "error_code": parsed_line.error_code,
-                "type": parsed_line.type,
-                "message": parsed_line.message,
-            }
-        )
+        result.append(parsed_line)
 
-    return dict(**result)
+    return result
