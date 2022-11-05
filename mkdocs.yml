@@ -1,3 +1,7 @@
 site_name: mypy-gh-action-report docs
 theme:
   name: material
+extra_css:
+- css/termynal.css
+extra_javascript:
+- js/termynal.js
