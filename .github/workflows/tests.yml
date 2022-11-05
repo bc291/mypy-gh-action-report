@@ -93,10 +93,11 @@ jobs:
       - name: Type check
         run: poetry run mypy mypy_gh_action_report
 
-      - uses: BobAnkh/auto-generate-changelog@v1
+      - name: Generate changelog
+        uses: charmixer/auto-changelog-action@v1
         with:
-          ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PATH: 'CHANGELOG-test.md'
+          token: ${{secrets.GITHUB_TOKEN}}
+          output: 'CHANGELOG-test.md'
 
       - name: Get ls
         run: |
