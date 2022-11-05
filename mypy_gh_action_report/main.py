@@ -12,7 +12,7 @@ IS_ATTY: Final[bool] = sys.stdin.isatty()
 app = typer.Typer()
 
 
-def version_callback(val: bool):
+def version_callback(val: bool) -> None:
     if val:
         typer.echo(__version__)
         raise typer.Exit(code=0)
