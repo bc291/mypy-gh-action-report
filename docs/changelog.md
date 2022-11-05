@@ -1,3 +1,8 @@
+## v0.2.1 (2022-11-05)
+
+- Add docs sections by @bc291 in #19
+- Fix commands titles by @bc291 in #20
+
 ## v0.2.0 (2022-11-05)
 
 - Add error type to GitHub workflow command by @bc291 in #11
