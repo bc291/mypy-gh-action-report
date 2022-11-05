@@ -28,4 +28,4 @@ jobs:
         run: poetry install
 
       - name: Type check
-        run: poetry run mypy tests/test_mypy_output.py | mypy-gh-action-report
+        run: /bin/bash -c "poetry run mypy tests/test_mypy_output.py | mypy-gh-action-report"
