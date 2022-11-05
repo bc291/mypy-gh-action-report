@@ -6,17 +6,17 @@ MYPY_MSG_TYPE_TO_GH_WF_MSG_TYPE_MAPPER: Dict[MypyErrorType, WorkflowMessageType]
     MypyErrorType.ERROR: WorkflowMessageType.ERROR,
     MypyErrorType.NOTE: WorkflowMessageType.WARNING,
 }
-TITLE_BEGINNING: Final[str] = "Mypy found"
+TITLE_BEGINNING: Final[str] = "Error code"
 
 
 def get_gh_workflow_type(_type: MypyErrorType) -> WorkflowMessageType:
     return MYPY_MSG_TYPE_TO_GH_WF_MSG_TYPE_MAPPER[_type]
 
 
-def construct_message_title(error_code: Optional[str]) -> str:
+def construct_message_title(error_code: Optional[str]) -> Optional[str]:
     if error_code:
         return f"{TITLE_BEGINNING}: `{error_code}`"
-    return f"{TITLE_BEGINNING} an issue"
+    return None
 
 
 def issue_message(error: MypyError) -> None:
