@@ -101,5 +101,5 @@ jobs:
 
       - name: Get ls
         run: |
-          ls ./CHANGELOG-test.md
+          cat ./CHANGELOG-test.md
         shell: bash
