@@ -106,6 +106,7 @@ jobs:
         shell: bash
 
       - name: Comment CHANGELOG to PR
+        if:  ${{ steps.changelog.outputs.changelog != '\n' }}
         uses: thollander/actions-comment-pull-request@v1
         with:
           message: ${{steps.changelog.outputs.changelog}}
