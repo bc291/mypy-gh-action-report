@@ -31,7 +31,6 @@ tox = "^3.27.0"
 tox-gh-actions = "^2.10.0"
 pytest-cov = "^4.0.0"
 
-
 [tool.poetry.group.type_check.dependencies]
 mypy = "^0.982"
 
