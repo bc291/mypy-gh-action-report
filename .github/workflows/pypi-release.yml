@@ -3,8 +3,8 @@ name: Release to PyPI
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - main
 
 jobs:
   release:

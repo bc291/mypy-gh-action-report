@@ -2,8 +2,8 @@ import dataclasses
 
 import pytest
 
-from mypy_gh_action_report.models import MypyError
-from mypy_gh_action_report.parser import convert_mypy_output_to_dict, parse_mypy_line
+from mypy_gh_action_report.models import MypyError, MypyErrorType
+from mypy_gh_action_report.parser import convert_mypy_output_to_model, parse_mypy_line
 
 TEST_DATA_1 = (
     "app/core/core.py:18"
@@ -67,7 +67,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/core/core.py",
                 line_no=18,
-                type="error",
+                type=MypyErrorType.ERROR,
                 message="Argument 1 to 'test' has incompatible type 'str'; expected 'int'",
                 error_code="arg-type",
             ),
@@ -80,7 +80,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/models/model.py",
                 line_no=53,
-                type="error",
+                type=MypyErrorType.ERROR,
                 message="Incompatible types in assignment (expression has type 'str', variable has type 'int')",
                 error_code="assignment",
             ),
@@ -94,7 +94,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/services/service.py",
                 line_no=57,
-                type="error",
+                type=MypyErrorType.ERROR,
                 message="Incompatible default for argument 'get_data' (default has type 'int', argument has type 'str')",
                 error_code="assignment",
             ),
@@ -107,7 +107,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/services/service2/file1.py",
                 line_no=66,
-                type="error",
+                type=MypyErrorType.ERROR,
                 message="Argument 'input' to 'get_input' has incompatible type 'int'; expected 'str'",
                 error_code="arg-type",
             ),
@@ -120,7 +120,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/core/core_file.py",
                 line_no=1,
-                type="error",
+                type=MypyErrorType.ERROR,
                 message="Library stubs not installed for 'redis' (or incompatible with Python 3.10)",
                 error_code="import",
             ),
@@ -130,7 +130,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/core/core_file.py",
                 line_no=1,
-                type="note",
+                type=MypyErrorType.NOTE,
                 message="Hint: 'python3 -m pip install types-redis'",
                 error_code=None,
             ),
@@ -143,7 +143,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/core/core_file2.py",
                 line_no=1,
-                type="note",
+                type=MypyErrorType.NOTE,
                 message="(or run 'mypy --install-types' to install all missing stub packages)",
                 error_code=None,
             ),
@@ -156,7 +156,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/core/core_file2.py",
                 line_no=1,
-                type="note",
+                type=MypyErrorType.NOTE,
                 message="See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports",
                 error_code=None,
             ),
@@ -170,7 +170,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/db/repository.py",
                 line_no=31,
-                type="error",
+                type=MypyErrorType.ERROR,
                 message=(
                     "Incompatible default for argument 'get_data' " "(default has type 'int', argument has type 'str')"
                 ),
@@ -185,7 +185,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="/opt/homebrew/lib/python3.10/site-packages/numpy/__init__.pyi",
                 line_no=642,
-                type="error",
+                type=MypyErrorType.ERROR,
                 message=("Positional-only parameters are only supported in Python 3.8 and greater"),
                 error_code=None,
             ),
@@ -198,7 +198,7 @@ class Scenario:
             expected_mypy_error=MypyError(
                 file_name="app/db/repository.py",
                 line_no=31,
-                type="error",
+                type=MypyErrorType.ERROR,
                 message="Incompatible default for argument 'get_data' (default has type 'int', argument has type 'str')",
                 error_code="assignment",
             ),
@@ -214,90 +214,84 @@ def test_pattern_matching(scenario):
 
 
 def test_convert_mypy_output_to_dict__test_data_1():
-    result = convert_mypy_output_to_dict(mypy_output=TEST_DATA_1)
+    result = convert_mypy_output_to_model(mypy_output=TEST_DATA_1)
 
-    assert result == {
-        "app/core/core.py": [
-            {
-                "line_no": 18,
-                "error_code": "arg-type",
-                "type": "error",
-                "message": "Argument 1 to 'test' has incompatible type 'str'; expected 'int'",
-            }
-        ],
-        "app/models/model.py": [
-            {
-                "line_no": 53,
-                "error_code": "assignment",
-                "type": "error",
-                "message": "Incompatible types in assignment (expression has type 'str', variable has type 'int')",
-            }
-        ],
-        "app/services/service.py": [
-            {
-                "line_no": 57,
-                "error_code": "assignment",
-                "type": "error",
-                "message": "Incompatible default for argument 'get_data' (default has type 'int', argument has type 'str')",
-            }
-        ],
-        "app/services/service2/file1.py": [
-            {
-                "line_no": 66,
-                "error_code": "arg-type",
-                "type": "error",
-                "message": "Argument 'input' to 'get_input' has incompatible type 'int'; expected 'str'",
-            }
-        ],
-    }
+    assert result == [
+        MypyError(
+            file_name="app/core/core.py",
+            line_no=18,
+            error_code="arg-type",
+            type=MypyErrorType.ERROR,
+            message="Argument 1 to 'test' has incompatible type 'str'; expected 'int'",
+        ),
+        MypyError(
+            file_name="app/models/model.py",
+            line_no=53,
+            error_code="assignment",
+            type=MypyErrorType.ERROR,
+            message="Incompatible types in assignment (expression has type 'str', variable has type 'int')",
+        ),
+        MypyError(
+            file_name="app/services/service.py",
+            line_no=57,
+            error_code="assignment",
+            type=MypyErrorType.ERROR,
+            message="Incompatible default for argument 'get_data' (default has type 'int', argument has type 'str')",
+        ),
+        MypyError(
+            file_name="app/services/service2/file1.py",
+            line_no=66,
+            error_code="arg-type",
+            type=MypyErrorType.ERROR,
+            message="Argument 'input' to 'get_input' has incompatible type 'int'; expected 'str'",
+        ),
+    ]
 
 
 def test_convert_mypy_output_to_dict__test_data_2():
-    result = convert_mypy_output_to_dict(mypy_output=TEST_DATA_2)
+    result = convert_mypy_output_to_model(mypy_output=TEST_DATA_2)
 
-    assert result == {
-        "app/services/service2/file2.py": [
-            {
-                "line_no": 85,
-                "error_code": "arg-type",
-                "type": "error",
-                "message": "Argument 'input' to 'get_input' has incompatible type 'int'; expected 'str'",
-            }
-        ],
-        "app/core/core_file.py": [
-            {
-                "line_no": 1,
-                "error_code": "import",
-                "type": "error",
-                "message": "Library stubs not installed for 'redis' (or incompatible with Python 3.10)",
-            },
-            {
-                "line_no": 1,
-                "error_code": None,
-                "type": "note",
-                "message": "Hint: 'python3 -m pip install types-redis'",
-            },
-        ],
-        "app/core/core_file2.py": [
-            {
-                "line_no": 1,
-                "error_code": None,
-                "type": "note",
-                "message": "(or run 'mypy --install-types' to install all missing stub packages)",
-            },
-            {
-                "line_no": 1,
-                "error_code": None,
-                "type": "note",
-                "message": "See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports",
-            },
-        ],
-        "app/db/repository.py": [
-            {
-                "line_no": 31,
-                "error_code": "assignment",
-                "type": "error",
-                "message": "Incompatible default for argument 'get_data' (default has type 'int', argument has type 'str')",
-            }
-        ],
-    }
+    assert result == [
+        MypyError(
+            file_name="app/services/service2/file2.py",
+            line_no=85,
+            error_code="arg-type",
+            type=MypyErrorType.ERROR,
+            message="Argument 'input' to 'get_input' has incompatible type 'int'; expected 'str'",
+        ),
+        MypyError(
+            file_name="app/core/core_file.py",
+            line_no=1,
+            error_code="import",
+            type=MypyErrorType.ERROR,
+            message="Library stubs not installed for 'redis' (or incompatible with Python 3.10)",
+        ),
+        MypyError(
+            file_name="app/core/core_file.py",
+            line_no=1,
+            error_code=None,
+            type=MypyErrorType.NOTE,
+            message="Hint: 'python3 -m pip install types-redis'",
+        ),
+        MypyError(
+            file_name="app/core/core_file2.py",
+            line_no=1,
+            error_code=None,
+            type=MypyErrorType.NOTE,
+            message="(or run 'mypy --install-types' to install all missing stub packages)",
+        ),
+        MypyError(
+            file_name="app/core/core_file2.py",
+            line_no=1,
+            error_code=None,
+            type=MypyErrorType.NOTE,
+            message="See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports",
+        ),
+        MypyError(
+            file_name="app/db/repository.py",
+            line_no=31,
+            error_code="assignment",
+            type=MypyErrorType.ERROR,
+            message="Incompatible default for argument 'get_data' (default has type 'int', argument has type 'str')",
+        ),
+    ]
