@@ -9,7 +9,7 @@ from mypy_gh_action_report.executors import classify_output, handle_output
 from . import __version__
 
 IS_ATTY: Final[bool] = sys.stdin.isatty()
-app = typer.Typer()
+app: typer.Typer = typer.Typer()
 
 
 def version_callback(val: bool) -> None:
