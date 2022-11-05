@@ -1,7 +1,18 @@
 site_name: mypy-gh-action-report docs
 theme:
   name: material
+
+repo_name: bc291/mypy-gh-action-report
+repo_url: https://github.com/bc291/mypy-gh-action-report
+
 extra_css:
 - css/termynal.css
 extra_javascript:
 - js/termynal.js
+
+nav:
+- Usage: usage.md
+- Exit codes: exit_codes.md
+- Development: development.md
+- Changelog: changelog.md
+- Thanks: thanks.md
