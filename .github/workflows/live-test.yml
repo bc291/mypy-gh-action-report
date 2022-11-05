@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  pre-commit:
+  live-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,5 +27,5 @@ jobs:
           PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
         run: poetry install
 
-      - name: Type check
-        run: /bin/bash -c "poetry run mypy tests/test_mypy_output.py | mypy-gh-action-report"
+      - name: Live type check
+        run: poetry run mypy tests/test_mypy_output.py | poetry run mypy-gh-action-report
