@@ -3,25 +3,26 @@ from unittest.mock import patch
 import pytest
 import typer
 
-from mypy_gh_action_report import converter, parser
+from mypy_gh_action_report import parser
+from mypy_gh_action_report.converters import gha, json
 from mypy_gh_action_report.executors import classify_output, handle_output
 
 
 @pytest.fixture
-def mock_convert_mypy_output_to_dict():
-    with patch.object(parser, "convert_mypy_output_to_dict") as mock:
+def mock_convert_mypy_output_to_model():
+    with patch.object(parser, "convert_mypy_output_to_model") as mock:
         yield mock
 
 
 @pytest.fixture
 def mock_get_workflow_commands():
-    with patch.object(converter, "get_workflow_commands") as mock:
+    with patch.object(gha, "get_workflow_commands") as mock:
         yield mock
 
 
 @pytest.fixture
 def mock_get_json_representation():
-    with patch.object(converter, "get_json_representation") as mock:
+    with patch.object(json, "get_json_representation") as mock:
         yield mock
 
 
@@ -49,17 +50,17 @@ def test_classify_output__success(capsys):
     assert stdout[0] == "Success. Nothing to be done"
 
 
-def test_handle_output__json_only_false(mock_convert_mypy_output_to_dict, mock_get_workflow_commands):
+def test_handle_output__json_only_false(mock_convert_mypy_output_to_model, mock_get_workflow_commands):
     handle_output("{}", json_only=False)
-    mock_convert_mypy_output_to_dict.assert_called_once_with(mypy_output="{}")
-    mock_get_workflow_commands.assert_called_once_with(mypy_output=mock_convert_mypy_output_to_dict())
+    mock_convert_mypy_output_to_model.assert_called_once_with(mypy_output="{}")
+    mock_get_workflow_commands.assert_called_once_with(mypy_errors=mock_convert_mypy_output_to_model())
 
 
-def test_handle_output__json_only_true(mock_convert_mypy_output_to_dict, mock_get_json_representation, capsys):
-    mock_get_json_representation.return_value = "{}"
-    handle_output("{}", json_only=True)
-    mock_convert_mypy_output_to_dict.assert_called_once_with(mypy_output="{}")
-    mock_get_json_representation.assert_called_once_with(mypy_output=mock_convert_mypy_output_to_dict())
+def test_handle_output__json_only_true(mock_convert_mypy_output_to_model, mock_get_json_representation, capsys):
+    mock_get_json_representation.return_value = "[{}]"
+    handle_output("[{}]", json_only=True)
+    mock_convert_mypy_output_to_model.assert_called_once_with(mypy_output="[{}]")
+    mock_get_json_representation.assert_called_once_with(mypy_errors=mock_convert_mypy_output_to_model())
 
     stdout = capsys.readouterr().out.splitlines()
-    assert stdout[0] == "{}"
+    assert stdout[0] == "[{}]"

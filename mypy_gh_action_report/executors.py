@@ -2,7 +2,8 @@ from typing import Final, Optional
 
 import typer
 
-from mypy_gh_action_report import converter, parser
+from mypy_gh_action_report import parser
+from mypy_gh_action_report.converters import gha, json
 
 SUCCESS_KEYWORD: Final[str] = "Success"
 
@@ -22,9 +23,9 @@ def classify_output(mypy_output: Optional[str]) -> None:
 
 
 def handle_output(mypy_output: str, json_only: bool) -> None:
-    mypy_output_as_dict = parser.convert_mypy_output_to_dict(mypy_output=mypy_output)
+    mypy_errors = parser.convert_mypy_output_to_model(mypy_output=mypy_output)
 
     if json_only:
-        typer.secho(converter.get_json_representation(mypy_output=mypy_output_as_dict), nl=True)
+        typer.secho(json.get_json_representation(mypy_errors=mypy_errors), nl=True)
     else:
-        converter.get_workflow_commands(mypy_output=mypy_output_as_dict)
+        gha.get_workflow_commands(mypy_errors=mypy_errors)
