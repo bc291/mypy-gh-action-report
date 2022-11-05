@@ -28,4 +28,4 @@ jobs:
         run: poetry install
 
       - name: Live type check
-        run: poetry run mypy tests/test_mypy_output.py | poetry run mypy-gh-action-report
+        run: poetry run mypy tests/test_mypy_output.py | poetry run mypy-gh-action-report || true
