@@ -98,7 +98,7 @@ In order to run tests issue:
 
 ```bash
 poetry install
-poetry run pytest .
+poetry run pytest tests/
 ```
 
 ## Exit codes
