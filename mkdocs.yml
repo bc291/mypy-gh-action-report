@@ -1,0 +1,3 @@
+site_name: mypy-gh-action-report docs
+theme:
+  name: material
