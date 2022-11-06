@@ -11,7 +11,7 @@ extra_javascript:
 - js/termynal.js
 
 nav:
-- Overview: main.md
+- Overview: index.md
 - Usage: usage.md
 - Exit codes: exit_codes.md
 - Development: development.md

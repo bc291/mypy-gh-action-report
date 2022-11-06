@@ -4,6 +4,7 @@
     <span data-ty></span>
     <span data-ty>Options:</span>
     <span data-ty>  --json-only / --no-json-only    Just convert mypy output to json  [default: no-json-only]</span>
+    <span data-ty>  v, --version                   Show version</span>
     <span data-ty>  --help                          Show this message and exit.</span>
 </div>
 

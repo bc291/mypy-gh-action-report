@@ -17,12 +17,16 @@ def version_callback(val: bool) -> None:
         typer.echo(__version__)
         raise typer.Exit(code=0)
 
+    return None
+
 
 @app.command()
 def run(
     mypy_output: Optional[str] = typer.Argument(None if IS_ATTY else sys.stdin.read(), hidden=True),
     json_only: bool = typer.Option(False, help="Just convert mypy output to json"),
-    _: Optional[bool] = typer.Option(None, "-v", "--version", is_eager=True, callback=version_callback),
+    _: Optional[bool] = typer.Option(
+        None, "-v", "--version", is_eager=True, callback=version_callback, help="Show version"
+    ),
 ) -> None:
     classify_output(mypy_output=mypy_output)
     handle_output(mypy_output=typing.cast(str, mypy_output), json_only=json_only)

@@ -61,7 +61,7 @@ jobs:
         run: poetry install
 
       - name: Coverage
-        run: poetry run pytest --cov-report=  --cov=mypy_gh_action_report tests/ > pytest-coverage.txt
+        run: poetry run pytest --cov-report=term-missing --cov=mypy_gh_action_report tests/ > pytest-coverage.txt
 
       - name: pytest-coverage-commentator
         uses: coroo/pytest-coverage-commentator@v1.0.2

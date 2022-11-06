@@ -70,6 +70,12 @@ disallow_incomplete_defs = true
 check_untyped_defs = true
 show_error_codes = true
 
+[tool.coverage.run]
+omit = [
+    "mypy_gh_action_report/main.py",
+]
+
+
 [tool.poetry.scripts]
 mypy-gh-action-report = 'mypy_gh_action_report.main:execute'
 
