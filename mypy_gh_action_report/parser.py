@@ -42,7 +42,7 @@ def convert_mypy_output_to_model(mypy_output: str) -> List[MypyError]:
         parsed_line = parse_mypy_line(mypy_line=mypy_line.strip())
 
         if not parsed_line:
-            continue  # tu
+            continue
 
         result.append(parsed_line)
 
