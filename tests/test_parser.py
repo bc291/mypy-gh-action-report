@@ -213,6 +213,17 @@ def test_pattern_matching(scenario):
     assert result == scenario.expected_mypy_error
 
 
+@pytest.mark.parametrize(
+    "line", ("This line is malformed", "app/db/repository.py:31: almost: Incompatible default for argument 'get_data'")
+)
+def test_parse_mypy_line__invalid(line):
+    # when
+    result = parse_mypy_line(mypy_line=line)
+
+    # then
+    assert result is None
+
+
 def test_convert_mypy_output_to_dict__test_data_1():
     result = convert_mypy_output_to_model(mypy_output=TEST_DATA_1)
 
@@ -295,3 +306,19 @@ def test_convert_mypy_output_to_dict__test_data_2():
             message="Incompatible default for argument 'get_data' (default has type 'int', argument has type 'str')",
         ),
     ]
+
+
+@pytest.mark.parametrize(
+    "line",
+    (
+        "This line is malformed\nFound 11 errors in 5 file (checked 10 source files)",
+        "app/db/repository.py:31: almost: Incompatible default for argument 'get_data'\n"
+        "Found 11 errors in 5 file (checked 10 source files)",
+    ),
+)
+def test_convert_mypy_output_to_model__invalid(line):
+    # when
+    result = convert_mypy_output_to_model(mypy_output=line)
+
+    # then
+    assert result == []
