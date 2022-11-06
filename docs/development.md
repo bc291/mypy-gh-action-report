@@ -6,7 +6,3 @@ In order to run tests issue:
 poetry install
 poetry run pytest tests/
 ```
-
-## TODO
-
-1. Group warnings for the same line

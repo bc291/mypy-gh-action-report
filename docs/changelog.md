@@ -7,7 +7,7 @@
 
 - Add error type to GitHub workflow command by @bc291 in #11
 - Change `--json-only` output by @bc291 in #11
-- Add docs to GitHub pages #15
+- Add docs to GitHub pages #15 by @bc291 in #11
 
 
 ## v0.1.0 (2022-11-03)

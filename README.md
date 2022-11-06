@@ -1,7 +1,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/mypy-gh-action-report.svg)](https://pypi.python.org/pypi/mypy-gh-action-report/)
-[![PyPI](https://img.shields.io/pypi/v/mypy-gh-action-report.svg")](https://pypi.python.org/pypi/mypy-gh-action-report/)
+[![PyPI](https://img.shields.io/pypi/v/mypy-gh-action-report.svg)](https://pypi.python.org/pypi/mypy-gh-action-report/)
 
 # mypy-gh-action-report
 
@@ -16,10 +16,6 @@ pip install mypy-gh-action-report
 ## Docs
 
 Available [here](https://bc291.github.io/mypy-gh-action-report/)
-
-## TODO
-
-1. Group warnings for the same line
 
 ## Thanks
 
