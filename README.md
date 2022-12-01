@@ -19,5 +19,5 @@ Available [here](https://bc291.github.io/mypy-gh-action-report/)
 
 ## Thanks
 
-- [actions-toolkit](https://github.com/yanglbme/actions-toolkit)
+- [github-action-utils](https://github.com/saadmk11/github-action-utils)
 - [typer](https://github.com/tiangolo/typer)

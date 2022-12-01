@@ -22,7 +22,7 @@ def construct_message_title(error_code: Optional[str]) -> Optional[str]:
 def issue_message(error: MypyError) -> None:
     gh_workflow_msg_type = get_gh_workflow_type(_type=error.type)
     title = construct_message_title(error_code=error.error_code)
-    gh_workflow_msg_type.handler(error.message, title=title, file=error.file_name, start_line=error.line_no)
+    gh_workflow_msg_type.handler(message=error.message, title=title, file=error.file_name, line=error.line_no)
 
 
 def get_workflow_commands(mypy_errors: List[MypyError]) -> None:

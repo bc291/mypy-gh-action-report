@@ -4,7 +4,7 @@ import dataclasses
 import enum
 from typing import Callable, Optional
 
-from actions_toolkit import core
+from github_action_utils import error, notice, warning
 
 
 class MypyErrorType(str, enum.Enum):
@@ -25,9 +25,9 @@ class MypyError:
 
 
 class WorkflowMessageType(str, enum.Enum):
-    ERROR = "error", core.error
-    WARNING = "warning", core.warning
-    NOTICE = "notice", core.notice
+    ERROR = "error", error
+    WARNING = "warning", warning
+    NOTICE = "notice", notice
 
     def __new__(cls, value: str, handler: Callable) -> WorkflowMessageType:
         obj = str.__new__(cls, value)
