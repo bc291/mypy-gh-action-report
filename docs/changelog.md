@@ -1,4 +1,4 @@
-## v0.2.1 (2022-11-05)
+## v0.2.2 (2022-11-05)
 
 - Doc clean-ups by @bc291 in #23
 - Switch to `github-actions-toolkit` @bc291 in #24
