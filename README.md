@@ -2,6 +2,8 @@
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/mypy-gh-action-report.svg)](https://pypi.python.org/pypi/mypy-gh-action-report/)
 [![PyPI](https://img.shields.io/pypi/v/mypy-gh-action-report.svg)](https://pypi.python.org/pypi/mypy-gh-action-report/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/mypy-gh-action-report?style=flat-square)](https://pypi.python.org/pypi/mypy-gh-action-report/)
+[![Tests workflow](https://github.com/bc291/mypy-gh-action-report/actions/workflows/tests.yml/badge.svg)](https://github.com/bc291/mypy-gh-action-report)
 
 # mypy-gh-action-report
 

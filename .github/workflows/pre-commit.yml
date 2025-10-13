@@ -10,12 +10,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@2e3e4b15a884dc73a63f962bff250a855150a234
         with:
-          python-version: "3.11"
+          python-version: "3.14"
 
       - name: Pre-commit
-        uses: pre-commit/action@v3.0.0
+        uses: pre-commit/action@1b06ec171f2f6faa71ed760c4042bd969e4f8b43
