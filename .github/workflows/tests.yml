@@ -68,7 +68,10 @@ jobs:
         with:
           pytest-coverage: pytest-coverage.txt
 
-  mypy:
+  type_check:
+    strategy:
+      matrix:
+        type_checker: [ "mypy", "ty check" ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -90,4 +93,4 @@ jobs:
         run: poetry install --only type_check
 
       - name: Type check
-        run: poetry run mypy mypy_gh_action_report
+        run: poetry run ${{ matrix.type_checker }} mypy_gh_action_report

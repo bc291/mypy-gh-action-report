@@ -95,7 +95,8 @@ class Scenario:
                 file_name="app/services/service.py",
                 line_no=57,
                 type=MypyErrorType.ERROR,
-                message="Incompatible default for argument 'get_data' (default has type 'int', argument has type 'str')",
+                message="Incompatible default for argument 'get_data' "
+                "(default has type 'int', argument has type 'str')",
                 error_code="assignment",
             ),
         ),
@@ -199,7 +200,8 @@ class Scenario:
                 file_name="app/db/repository.py",
                 line_no=31,
                 type=MypyErrorType.ERROR,
-                message="Incompatible default for argument 'get_data' (default has type 'int', argument has type 'str')",
+                message="Incompatible default for argument 'get_data' "
+                "(default has type 'int', argument has type 'str')",
                 error_code="assignment",
             ),
         ),

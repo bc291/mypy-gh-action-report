@@ -1,4 +1,4 @@
-from typing import Final, Optional
+from typing import Final
 
 import typer
 
@@ -8,7 +8,7 @@ from mypy_gh_action_report.converters import gha, json
 SUCCESS_KEYWORD: Final[str] = "Success"
 
 
-def classify_output(mypy_output: Optional[str]) -> None:
+def classify_output(mypy_output: str | None) -> None:
     if mypy_output is None:
         typer.secho("Please provide stdin data", fg=typer.colors.RED)
         raise typer.Exit(code=2)
