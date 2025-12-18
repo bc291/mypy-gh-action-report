@@ -1,6 +1,6 @@
 import sys
 import typing
-from typing import Final, Optional
+from typing import Final
 
 import typer
 
@@ -22,9 +22,9 @@ def version_callback(val: bool) -> None:
 
 @app.command()
 def run(
-    mypy_output: Optional[str] = typer.Argument(None if IS_ATTY else sys.stdin.read(), hidden=True),
+    mypy_output: str | None = typer.Argument(None if IS_ATTY else sys.stdin.read(), hidden=True),
     json_only: bool = typer.Option(False, help="Just convert mypy output to json"),
-    _: Optional[bool] = typer.Option(
+    _: bool | None = typer.Option(
         None, "-v", "--version", is_eager=True, callback=version_callback, help="Show version"
     ),
 ) -> None:

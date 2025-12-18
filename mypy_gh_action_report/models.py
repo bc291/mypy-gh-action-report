@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import enum
-from typing import Callable, Optional
+from collections.abc import Callable
 
 from github_action_utils import error, notice, warning
 
@@ -18,7 +18,7 @@ class MypyError:
     line_no: int
     type: MypyErrorType
     message: str
-    error_code: Optional[str]
+    error_code: str | None
 
     def __post_init__(self) -> None:
         self.line_no = int(self.line_no)
