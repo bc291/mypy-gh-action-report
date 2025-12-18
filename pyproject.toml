@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mypy-gh-action-report"
-version = "0.2.3"
+version = "0.2.4"
 description = "Notify Mypy output via GitHub Workflow Commands"
 authors = ["Błażej Cyrzon <blazej.cyrzon@gmail.com>"]
 license = "MIT"
