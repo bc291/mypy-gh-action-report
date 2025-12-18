@@ -1,5 +1,6 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v1.json)](https://github.com/astral-sh/ruff)
+[![ty](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)](https://github.com/astral-sh/ruff)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/mypy-gh-action-report.svg)](https://pypi.python.org/pypi/mypy-gh-action-report/)
 [![PyPI](https://img.shields.io/pypi/v/mypy-gh-action-report.svg)](https://pypi.python.org/pypi/mypy-gh-action-report/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/mypy-gh-action-report?style=flat-square)](https://pypi.python.org/pypi/mypy-gh-action-report/)

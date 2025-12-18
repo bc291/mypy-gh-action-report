@@ -68,7 +68,10 @@ jobs:
         with:
           pytest-coverage: pytest-coverage.txt
 
-  mypy:
+  type_check:
+    strategy:
+      matrix:
+        type_checker: [ "mypy", "ty check" ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -87,7 +90,7 @@ jobs:
       - name: Install dependencies
         env:
           PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
-        run: poetry install --only type_check
+        run: poetry install --with type_check
 
       - name: Type check
-        run: poetry run mypy mypy_gh_action_report
+        run: poetry run ${{ matrix.type_checker }} mypy_gh_action_report
